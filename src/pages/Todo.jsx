@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
 import "../App.css";
-import { collection, addDoc } from "firebase/firestore";
+import React, { useState, useEffect } from 'react';
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import {db} from '../firebase';
-   
-
+ 
  
 const Todo = () => {
-
-    const [todo, setTodo] = useState("")
-
+    const [todo, setTodo] = useState("");
+    const [todos, setTodos] = useState([]);
+ 
     const addTodo = async (e) => {
         e.preventDefault();  
        
@@ -21,7 +20,24 @@ const Todo = () => {
             console.error("Error adding document: ", e);
           }
     }
-
+ 
+    const fetchPost = async () => {
+       
+        await getDocs(collection(db, "items_to_rate"))
+            .then((querySnapshot)=>{              
+                const newData = querySnapshot.docs
+                    .map((doc) => ({...doc.data(), id:doc.id }));
+                setTodos(newData);                
+                console.log(todos, newData);
+            })
+       
+    }
+   
+    useEffect(()=>{
+        fetchPost();
+    }, [])
+ 
+ 
     return (
         <section className="todo-container">
             <div className="todo">
@@ -52,7 +68,13 @@ const Todo = () => {
                 </div>
    
                 <div className="todo-content">
-                    ...
+                    {
+                        todos?.map((todo,i)=>(
+                            <p key={i}>
+                                {todo.obj_name}
+                            </p>
+                        ))
+                    }
                 </div>
             </div>
         </section>
