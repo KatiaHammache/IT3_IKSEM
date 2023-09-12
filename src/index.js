@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import ContactUs from './pages/ContactUs';
 import BarPresentation from './pages/BarPresentation';
 import ListOfBar from './pages/ListOfBar';
+import Todo from './pages/Todo';
 
 
 //On défini l'ensemble de nos routes ici :
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
   //Ici on indique l'élément que vas prendre la première page de notre Site.
   {
     path: '/',
-    element: <Home/>,
+    element: <ContactUs/>,
   },
   //Ensuite on définit l'ensemble des autres page de notre site.
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
     path: '/ListOfBar',
     element: <ListOfBar/>,
   },
+  {
+    path: '/Todo',
+    element: <Todo/>
+  }
 ])
 
 
